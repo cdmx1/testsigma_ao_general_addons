@@ -1,5 +1,5 @@
 
-/* Change Logs: AUTO-859 | Function to change the number into the amount format with commas - eg. : 1,000,000 | 16/11/23 */
+/* Change Logs: AUTO-859 | Function to change the number into the amount format with commas - eg. : 1,000,000 | 01/12/23 */
 
 
 package com.cdmx.testsigma.addons.web;
