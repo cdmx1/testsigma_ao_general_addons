@@ -50,7 +50,7 @@ public class ValueExtractor extends WebAction {
             Map<String, Object> dataMap = new HashMap<>();
 
             // Regular expression to match key-value pairs in the format: "key": value
-            Pattern pattern = Pattern.compile("\"(\\w+)\": (\\d*\\.?\\d+)");
+            Pattern pattern = Pattern.compile("\"(\\w+)\":(\\d*\\.?\\d+)");
             Matcher matcher = pattern.matcher(testArray.getValue().toString());
 
             while (matcher.find()) {
