@@ -1,4 +1,4 @@
-/* Change Logs: AUTO-860 | This addon will extract the value from an object and store in a variable based on the value entered | 01/12/23 */
+/* Change Logs: AUTO-904 | This addon will extract the value from an object and store in a variable based on the value entered | 20/12/23 */
 
 
 package com.cdmx.testsigma.addons.web;
@@ -50,7 +50,7 @@ public class ValueExtractor extends WebAction {
             Map<String, Object> dataMap = new HashMap<>();
 
             // Regular expression to match key-value pairs in the format: "key": value
-            Pattern pattern = Pattern.compile("\"(\\w+)\":(\\d*\\.?\\d+)");
+            Pattern pattern = Pattern.compile("\"(\\w+)\":(\\-?\\d*\\.?\\d+)");
             Matcher matcher = pattern.matcher(testArray.getValue().toString());
 
             while (matcher.find()) {
@@ -71,7 +71,8 @@ public class ValueExtractor extends WebAction {
             // Extract and store the corresponding value
             Object targetValueObject = dataMap.get(targetValue);
             if (targetValueObject == null) {
-                throw new Exception("Target value not found in the array.");
+                targetValueObject = "0";
+                //throw new Exception("Target value not found in the array.");
             }
 
             // Handle different data types before storing in runtime variable
