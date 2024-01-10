@@ -12,10 +12,13 @@ import com.testsigma.sdk.annotation.TestData;
 import com.testsigma.sdk.annotation.RunTimeData;
 import lombok.Data;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import org.openqa.selenium.NoSuchElementException;
+import java.math.RoundingMode;
+
 
 @Data
-@Action(actionText = "Convert the amount into the comma format and store in runtime variable",
+@Action(actionText = "Convert the amount into the comma format considering number decimal places and store in runtime variable",
         description = "This addon will convert the amount to the comma format and store in a variable",
         applicationType = ApplicationType.WEB)
 public class AmountFormatter extends WebAction {
@@ -24,6 +27,9 @@ public class AmountFormatter extends WebAction {
   @TestData(reference = "amount")
   private com.testsigma.sdk.TestData testAmount;
 
+  @TestData(reference = "number")
+  private com.testsigma.sdk.TestData testDecimal;
+  
   @TestData(reference = "variable")
   private com.testsigma.sdk.TestData runtimeVar;
   
@@ -34,7 +40,17 @@ public class AmountFormatter extends WebAction {
   public com.testsigma.sdk.Result execute() throws NoSuchElementException {
     //Your Awesome code starts here
     NumberFormat numberFormat = NumberFormat.getNumberInstance();
-
+    String testDecimalDigits = testDecimal.getValue().toString();
+    int decimalDigit = 0;
+    try {
+      decimalDigit = numberFormat.parse(testDecimalDigits).intValue();
+    } catch (ParseException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+        numberFormat.setMaximumFractionDigits(decimalDigit);
+        numberFormat.setMinimumFractionDigits(decimalDigit);
+        numberFormat.setRoundingMode(RoundingMode.DOWN);
     // Set the formatting to use commas
     numberFormat.setGroupingUsed(true);
 
@@ -51,6 +67,7 @@ public class AmountFormatter extends WebAction {
 
 
 
+            
 		runTimeData.setKey(runtimeVar.getValue().toString());
 		runTimeData.setValue(formattedAmount);
        
